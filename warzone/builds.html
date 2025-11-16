@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Build Armi - The Infinity</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-color: #0d0eff;
+        --primary-dark: #0b0bcc;
+        --gradient-start: #0d0eff;
+        --gradient-end: #6b0eff;
+        --dark-bg: #0a0a1f;
+        --card-bg: #1a1a3e;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(
+          135deg,
+          #0a0a1f 0%,
+          #1a1a2e 50%,
+          #16213e 100%
+        );
+        color: #fff;
+        min-height: 100vh;
+      }
+
+      /* Navbar */
+      .navbar {
+        background: linear-gradient(
+          135deg,
+          var(--gradient-start) 0%,
+          var(--gradient-end) 100%
+        ) !important;
+        box-shadow: 0 4px 20px rgba(13, 14, 255, 0.4);
+        backdrop-filter: blur(10px);
+        padding: 1rem 0;
+      }
+
+      .navbar-brand {
+        font-size: 1.8rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: white !important;
+        text-shadow: 0 2px 10px rgba(255, 255, 255, 0.3);
+      }
+
+      .nav-link {
+        color: rgba(255, 255, 255, 0.9) !important;
+        margin: 0 10px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .nav-link:hover {
+        color: white !important;
+        transform: translateY(-2px);
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: white;
+        transition: width 0.3s ease;
+      }
+
+      .nav-link:hover::after {
+        width: 100%;
+      }
+
+      /* Header */
+      header {
+        background: linear-gradient(
+          135deg,
+          var(--gradient-start) 0%,
+          var(--gradient-end) 100%
+        );
+        padding: 4rem 2rem !important;
+        position: relative;
+        overflow: hidden;
+        margin-top: 56px;
+      }
+
+      header::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.1) 0%,
+          transparent 70%
+        );
+        animation: pulse 4s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.5;
+        }
+        50% {
+          transform: scale(1.1);
+          opacity: 0.3;
+        }
+      }
+
+      header h1 {
+        font-size: 3.5rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        position: relative;
+        z-index: 1;
+      }
+
+      header p {
+        font-size: 1.3rem;
+        opacity: 0.95;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Title Section */
+      .page-title {
+        color: var(--primary-color);
+        font-size: 2.5rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        text-shadow: 0 0 30px rgba(13, 14, 255, 0.6);
+        position: relative;
+        padding-bottom: 20px;
+        margin-bottom: 3rem;
+      }
+
+      .page-title::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 4px;
+        background: linear-gradient(
+          90deg,
+          var(--gradient-start),
+          var(--gradient-end)
+        );
+        border-radius: 2px;
+      }
+
+      /* Weapon Select */
+      .weapon-select-wrapper {
+        position: relative;
+        max-width: 400px;
+        margin: 0 auto 3rem;
+      }
+
+      .form-select {
+        background: linear-gradient(135deg, var(--card-bg) 0%, #252550 100%);
+        border: 2px solid var(--primary-color);
+        color: white;
+        padding: 15px 20px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 25px rgba(13, 14, 255, 0.3);
+        text-align: center;
+      }
+
+      .form-select:focus {
+        outline: none;
+        border-color: var(--gradient-end);
+        box-shadow: 0 8px 35px rgba(107, 14, 255, 0.5);
+        transform: translateY(-2px);
+      }
+
+      .form-select option {
+        background: var(--card-bg);
+        color: white;
+        padding: 10px;
+      }
+
+      /* Weapon Card */
+      .weapon-card {
+        background: linear-gradient(135deg, var(--card-bg) 0%, #252550 100%);
+        border-radius: 25px;
+        padding: 3rem;
+        box-shadow: 0 15px 60px rgba(0, 0, 0, 0.5);
+        border: 2px solid rgba(13, 14, 255, 0.3);
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .weapon-card::before {
+        content: "";
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(
+          45deg,
+          var(--gradient-start),
+          var(--gradient-end),
+          var(--gradient-start)
+        );
+        border-radius: 25px;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        z-index: -1;
+        background-size: 200% 200%;
+        animation: gradientShift 3s ease infinite;
+      }
+
+      @keyframes gradientShift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .weapon-card:hover::before {
+        opacity: 1;
+      }
+
+      .weapon-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 70px rgba(13, 14, 255, 0.4);
+      }
+
+      /* Weapon Image */
+      .weapon-image-wrapper {
+        position: relative;
+        padding: 2rem;
+        background: radial-gradient(
+          circle,
+          rgba(13, 14, 255, 0.1) 0%,
+          transparent 70%
+        );
+        border-radius: 20px;
+        transition: all 0.4s ease;
+      }
+
+      .weapon-image-wrapper:hover {
+        transform: scale(1.05) rotate(2deg);
+      }
+
+      .weapon-image {
+        width: 100%;
+        height: auto;
+        filter: drop-shadow(0 10px 30px rgba(13, 14, 255, 0.5));
+        transition: all 0.4s ease;
+      }
+
+      .weapon-card:hover .weapon-image {
+        filter: drop-shadow(0 15px 40px rgba(107, 14, 255, 0.7));
+      }
+
+      /* Weapon Title */
+      .weapon-section-title {
+        font-size: 2rem;
+        font-weight: bold;
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        margin-bottom: 2rem;
+        padding-bottom: 15px;
+        border-bottom: 3px solid var(--primary-color);
+        text-shadow: 0 0 20px rgba(13, 14, 255, 0.6);
+      }
+
+      /* Attachments */
+      .attachment-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .attachment-item {
+        background: linear-gradient(
+          135deg,
+          rgba(13, 14, 255, 0.15) 0%,
+          rgba(107, 14, 255, 0.15) 100%
+        );
+        padding: 20px 25px;
+        border-radius: 15px;
+        border-left: 4px solid var(--primary-color);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .attachment-item::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.1),
+          transparent
+        );
+        transition: left 0.5s ease;
+      }
+
+      .attachment-item:hover::before {
+        left: 100%;
+      }
+
+      .attachment-item:hover {
+        transform: translateX(10px);
+        background: linear-gradient(
+          135deg,
+          rgba(13, 14, 255, 0.25) 0%,
+          rgba(107, 14, 255, 0.25) 100%
+        );
+        border-left-width: 6px;
+        box-shadow: 0 5px 20px rgba(13, 14, 255, 0.3);
+      }
+
+      .attachment-item span {
+        display: block;
+        font-size: 0.9rem;
+        color: var(--primary-color);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 5px;
+      }
+
+      .attachment-item strong {
+        display: block;
+        font-size: 1.2rem;
+        color: white;
+        font-weight: 700;
+      }
+
+      .attachment-item .unlock-info {
+        display: block;
+        font-size: 0.85rem;
+        color: #ffd700;
+        font-weight: 500;
+        margin-top: 8px;
+        padding: 5px 12px;
+        background: rgba(255, 215, 0, 0.1);
+        border-radius: 8px;
+        border-left: 3px solid #ffd700;
+        width: fit-content;
+      }
+
+      .attachment-item .unlock-info::before {
+        content: "🔓 ";
+        margin-right: 5px;
+      }
+
+      /* Footer */
+      footer {
+        background: linear-gradient(
+          135deg,
+          var(--gradient-start) 0%,
+          var(--gradient-end) 100%
+        );
+        box-shadow: 0 -4px 20px rgba(13, 14, 255, 0.3);
+        padding: 2rem 0;
+        margin-top: 4rem;
+      }
+
+      /* Animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .weapon-card {
+        animation: fadeInUp 0.6s ease forwards;
+      }
+
+      /* Scrollbar */
+      ::-webkit-scrollbar {
+        width: 12px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--dark-bg);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(
+          135deg,
+          var(--gradient-start),
+          var(--gradient-end)
+        );
+        border-radius: 6px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-dark);
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        header h1 {
+          font-size: 2.5rem;
+          letter-spacing: 2px;
+        }
+
+        .page-title {
+          font-size: 2rem;
+        }
+
+        .weapon-card {
+          padding: 2rem 1.5rem;
+        }
+
+        .weapon-section-title {
+          font-size: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">∞ The Infinity - Warzone</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#nav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="../index.html#home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="builds.html">Build Armi</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HEADER -->
+    <header class="text-white text-center">
+      <h1>⚔️ Build delle Armi</h1>
+      <p>Lista aggiornata delle build usate dal server</p>
+    </header>
+
+    <div class="container py-5">
+      <h2 class="text-center page-title">🎯 LE ARMI DEL SERVER</h2>
+
+      <!-- WEAPON SELECT -->
+      <div class="weapon-select-wrapper">
+        <select id="weaponSelect" class="form-select">
+          <option value="kilo">🔫 Kilo 141</option>
+          <option value="m4">🔫 M4A1</option>
+          <option value="ak47">🔫 AK-47</option>
+          <option value="mp5">🔫 MP5</option>
+        </select>
+      </div>
+
+      <!-- WEAPON CARD -->
+      <div id="weaponCard" class="weapon-card">
+        <div class="row g-4 align-items-center">
+          <!-- IMAGE -->
+          <div class="col-md-6">
+            <div class="weapon-image-wrapper">
+              <img
+                id="weaponImage"
+                src="https://via.placeholder.com/600x300/1a1a3e/0d0eff?text=KILO+141"
+                class="weapon-image"
+                alt="Weapon"
+              />
+            </div>
+          </div>
+
+          <!-- ATTACHMENTS -->
+          <div class="col-md-6">
+            <div id="weaponTitle" class="weapon-section-title">
+              KILO 141 – ATTACHMENTS
+            </div>
+            <div id="attachmentList" class="attachment-list"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="text-white text-center">
+      <p class="mb-0">&copy; 2025 The Infinity - Tutti i diritti riservati</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      const weapons = {
+        kilo: {
+          name: "KILO 141",
+          img: "https://via.placeholder.com/600x300/1a1a3e/0d0eff?text=KILO+141",
+          attachments: [
+            { type: "🔭 OPTIC", name: "WILLIS 3X", unlock: "Livello Arma 20" },
+            {
+              type: "🔇 MUZZLE",
+              name: "MONOLITHIC SUPPRESSOR",
+              unlock: "Livello Arma 30",
+            },
+            {
+              type: "📏 BARREL",
+              name: "REINFORCED BARREL",
+              unlock: "Livello Arma 22",
+            },
+            {
+              type: "🎯 UNDERBARREL",
+              name: "VERTICAL FOREGRIP",
+              unlock: "Livello Arma 10",
+            },
+            {
+              type: "📦 MAGAZINE",
+              name: "EXTENDED MAG II",
+              unlock: "Livello Arma 16",
+            },
+          ],
+        },
+        m4: {
+          name: "M4A1",
+          img: "https://via.placeholder.com/600x300/1a1a3e/6b0eff?text=M4A1",
+          attachments: [
+            { type: "🔭 OPTIC", name: "VLC HOLO", unlock: "Livello Arma 14" },
+            {
+              type: "🔇 MUZZLE",
+              name: "TACTICAL SUPPRESSOR",
+              unlock: "Livello Arma 26",
+            },
+            {
+              type: "📏 BARREL",
+              name: "GRENADIER BARREL",
+              unlock: "Livello Arma 28",
+            },
+            {
+              type: "🎯 UNDERBARREL",
+              name: "COMMANDO FOREGRIP",
+              unlock: "Livello Arma 18",
+            },
+            {
+              type: "📦 MAGAZINE",
+              name: "60 ROUND MAG",
+              unlock: "Livello Arma 35",
+            },
+          ],
+        },
+        ak47: {
+          name: "AK-47",
+          img: "https://via.placeholder.com/600x300/1a1a3e/8b0eff?text=AK-47",
+          attachments: [
+            {
+              type: "🔭 OPTIC",
+              name: "RED DOT SIGHT",
+              unlock: "Livello Arma 12",
+            },
+            {
+              type: "🔇 MUZZLE",
+              name: "COMPENSATOR",
+              unlock: "Livello Arma 18",
+            },
+            {
+              type: "📏 BARREL",
+              name: "ROMANIAN BARREL",
+              unlock: "Livello Arma 25",
+            },
+            {
+              type: "🎯 UNDERBARREL",
+              name: "RANGER FOREGRIP",
+              unlock: "Livello Arma 15",
+            },
+            {
+              type: "📦 MAGAZINE",
+              name: "40 ROUND MAG",
+              unlock: "Livello Arma 8",
+            },
+          ],
+        },
+        mp5: {
+          name: "MP5",
+          img: "https://via.placeholder.com/600x300/1a1a3e/ab0eff?text=MP5",
+          attachments: [
+            {
+              type: "🔭 OPTIC",
+              name: "INTEGRAL HYBRID",
+              unlock: "Livello Arma 24",
+            },
+            {
+              type: "🔇 MUZZLE",
+              name: "MONOLITHIC INTEGRAL SUPPRESSOR",
+              unlock: "Livello Arma 32",
+            },
+            {
+              type: "📏 BARREL",
+              name: "SUBSONIC INTEGRAL",
+              unlock: "Livello Arma 28",
+            },
+            {
+              type: "🎯 UNDERBARREL",
+              name: "MERC FOREGRIP",
+              unlock: "Livello Arma 12",
+            },
+            {
+              type: "📦 MAGAZINE",
+              name: "45 ROUND MAG",
+              unlock: "Livello Arma 20",
+            },
+          ],
+        },
+      };
+
+      const select = document.getElementById("weaponSelect");
+      const image = document.getElementById("weaponImage");
+      const title = document.getElementById("weaponTitle");
+      const list = document.getElementById("attachmentList");
+      const card = document.getElementById("weaponCard");
+
+      function updateWeapon(key) {
+        const w = weapons[key];
+
+        // Fade out animation
+        card.style.opacity = "0";
+        card.style.transform = "translateY(20px)";
+
+        setTimeout(() => {
+          image.src = w.img;
+          title.textContent = `${w.name} – ATTACHMENTS`;
+
+          list.innerHTML = w.attachments
+            .map(
+              (a) => `
+                        <div class="attachment-item">
+                            <span>${a.type}</span>
+                            <strong>${a.name}</strong>
+                            <span class="unlock-info">${a.unlock}</span>
+                        </div>
+                    `
+            )
+            .join("");
+
+          // Fade in animation
+          card.style.opacity = "1";
+          card.style.transform = "translateY(0)";
+        }, 300);
+      }
+
+      card.style.transition = "opacity 0.3s ease, transform 0.3s ease";
+
+      select.addEventListener("change", () => updateWeapon(select.value));
+      updateWeapon("kilo");
+    </script>
+  </body>
+</html>
