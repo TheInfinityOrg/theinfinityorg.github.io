@@ -331,6 +331,7 @@
         width: 100%;
         height: auto;
         filter: drop-shadow(0 10px 30px rgba(13, 14, 255, 0.5));
+        border-radius: 20px;
         transition: all 0.4s ease;
       }
 
@@ -567,9 +568,9 @@
           <div class="custom-select-option selected" data-value="ffar1">
             1° FFAR 1
           </div>
-          <div class="custom-select-option" data-value="m4">2° M4A1</div>
-          <div class="custom-select-option" data-value="ak47">3° AK-47</div>
-          <div class="custom-select-option" data-value="mp5">4° MP5</div>
+          <div class="custom-select-option" data-value="gpr91">2° GPR 91</div>
+          <div class="custom-select-option" data-value="lc10">3° LC10</div>
+          <!-- <div class="custom-select-option" data-value="mp5">4° MP5</div> -->
         </div>
       </div>
 
@@ -669,95 +670,99 @@
             },
           ],
         },
-        m4: {
-          name: "M4A1",
-          img: "https://via.placeholder.com/600x300/1a1a3e/6b0eff?text=M4A1",
-          attachments: [
-            { type: "🔭 OPTIC", name: "VLC HOLO", unlock: "Livello Arma 14" },
-            {
-              type: "🔇 MUZZLE",
-              name: "TACTICAL SUPPRESSOR",
-              unlock: "Livello Arma 26",
-            },
-            {
-              type: "📏 BARREL",
-              name: "GRENADIER BARREL",
-              unlock: "Livello Arma 28",
-            },
-            {
-              type: "🎯 UNDERBARREL",
-              name: "COMMANDO FOREGRIP",
-              unlock: "Livello Arma 18",
-            },
-            {
-              type: "📦 MAGAZINE",
-              name: "60 ROUND MAG",
-              unlock: "Livello Arma 35",
-            },
-          ],
-        },
-        ak47: {
-          name: "AK-47",
-          img: "https://via.placeholder.com/600x300/1a1a3e/8b0eff?text=AK-47",
+        gpr91: {
+          name: "GPR 91",
+          img: "../img/assets/GPR 91.png",
           attachments: [
             {
-              type: "🔭 OPTIC",
-              name: "RED DOT SIGHT",
-              unlock: "Livello Arma 12",
+              type: "Ottica",
+              name: "Jason armory 2x",
+              unlock: "Livello Arma 5",
             },
             {
-              type: "🔇 MUZZLE",
-              name: "COMPENSATOR",
-              unlock: "Livello Arma 18",
+              type: "Volata",
+              name: "Compensatore",
+              unlock: "Livello Arma 21",
             },
             {
-              type: "📏 BARREL",
-              name: "ROMANIAN BARREL",
-              unlock: "Livello Arma 25",
+              type: "Canna",
+              name: "Canna lunga",
+              unlock: "Livello Arma 2",
             },
             {
-              type: "🎯 UNDERBARREL",
-              name: "RANGER FOREGRIP",
+              type: "Sottocanna",
+              name: "Impugnatura anteriore verticale",
               unlock: "Livello Arma 15",
             },
             {
-              type: "📦 MAGAZINE",
-              name: "40 ROUND MAG",
-              unlock: "Livello Arma 8",
+              type: "Caricatore",
+              name: "Caricatore aumentato II",
+              unlock: "Livello Arma 30",
             },
           ],
         },
-        mp5: {
-          name: "MP5",
-          img: "https://via.placeholder.com/600x300/1a1a3e/ab0eff?text=MP5",
+        lc10: {
+          name: "LC10",
+          img: "../img/assets/LC10.png",
           attachments: [
             {
-              type: "🔭 OPTIC",
-              name: "INTEGRAL HYBRID",
+              type: "Canna",
+              name: "Canna rinforzata",
+              unlock: "Livello Arma 29",
+            },
+            {
+              type: "Sottocanna",
+              name: "Impugnatura anteriore verticale",
+              unlock: "Livello Arma 8",
+            },
+            {
+              type: "Caricatore",
+              name: "Caricatore aumentato II",
+              unlock: "Livello Arma 31",
+            },
+            {
+              type: "Impugnatura",
+              name: "Impugnatura ergonomica",
+              unlock: "Livello Arma 38",
+            },
+            {
+              type: "Mod fuoco",
+              name: "9x x 19 mm Parabellum FMJ",
               unlock: "Livello Arma 24",
-            },
-            {
-              type: "🔇 MUZZLE",
-              name: "MONOLITHIC INTEGRAL SUPPRESSOR",
-              unlock: "Livello Arma 32",
-            },
-            {
-              type: "📏 BARREL",
-              name: "SUBSONIC INTEGRAL",
-              unlock: "Livello Arma 28",
-            },
-            {
-              type: "🎯 UNDERBARREL",
-              name: "MERC FOREGRIP",
-              unlock: "Livello Arma 12",
-            },
-            {
-              type: "📦 MAGAZINE",
-              name: "45 ROUND MAG",
-              unlock: "Livello Arma 20",
             },
           ],
         },
+        // mp5: {
+        //   name: "MP5",
+        //   img: "https://via.placeholder.com/600x300/1a1a3e/ab0eff?text=MP5",
+        //   attachments: [
+        //     {
+        //       type: "🔭 OPTIC",
+        //       name: "INTEGRAL HYBRID",
+        //       unlock: "Livello Arma 24",
+        //     },
+        //     {
+        //       type: "🔇 MUZZLE",
+        //       name: "MONOLITHIC INTEGRAL SUPPRESSOR",
+        //       unlock: "Livello Arma 32",
+        //     },
+        //     {
+        //       type: "📏 BARREL",
+        //       name: "SUBSONIC INTEGRAL",
+        //       unlock: "Livello Arma 28",
+        //     },
+        //     {
+        //       type: "🎯 UNDERBARREL",
+        //       name: "MERC FOREGRIP",
+        //       unlock: "Livello Arma 12",
+        //     },
+        //     {
+        //       type: "📦 MAGAZINE",
+        //       name: "45 ROUND MAG",
+        //       unlock: "Livello Arma 20",
+        //     },
+        //   ],
+        // },
       };
 
       // Custom Select Logic
