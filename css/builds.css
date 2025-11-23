@@ -1,0 +1,495 @@
+/* ============================================
+   BUILDS PAGE STYLES
+   Specific styles for weapon builds page
+   ============================================ */
+
+/* ============================================
+   PAGE TITLE
+   ============================================ */
+.page-title {
+    color: var(--primary-color);
+    font-size: 2.8rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-shadow: 0 0 40px rgba(13, 14, 255, 0.7),
+        0 0 80px rgba(13, 14, 255, 0.3);
+    position: relative;
+    padding-bottom: 1.5rem;
+    margin-bottom: 3.5rem;
+}
+
+.page-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 5px;
+    background: linear-gradient(90deg,
+            transparent,
+            var(--gradient-start),
+            var(--gradient-end),
+            transparent);
+    border-radius: var(--radius-full);
+    box-shadow: 0 2px 15px rgba(13, 14, 255, 0.6);
+}
+
+/* ============================================
+   CUSTOM DROPDOWN
+   ============================================ */
+.custom-select-wrapper {
+    position: relative;
+    max-width: 550px;
+    margin: 0 auto 3.5rem;
+    z-index: 100;
+}
+
+.custom-select-trigger {
+    background: linear-gradient(135deg, var(--card-bg) 0%, #252550 100%);
+    border: 3px solid var(--primary-color);
+    color: white;
+    padding: 20px 28px;
+    font-size: 1.4rem;
+    font-weight: 800;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    box-shadow: 0 10px 35px rgba(13, 14, 255, 0.45);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+}
+
+.custom-select-trigger::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.1),
+            transparent);
+    transition: left 0.5s ease;
+}
+
+.custom-select-trigger:hover::before {
+    left: 100%;
+}
+
+.custom-select-trigger:hover {
+    border-color: var(--gradient-end);
+    box-shadow: 0 12px 45px rgba(107, 14, 255, 0.65);
+    transform: translateY(-3px) scale(1.02);
+}
+
+.custom-select-trigger.active {
+    border-color: var(--gradient-end);
+    box-shadow: 0 15px 55px rgba(107, 14, 255, 0.8);
+    transform: scale(1.02);
+}
+
+.custom-select-arrow {
+    width: 26px;
+    height: 26px;
+    transition: transform var(--transition-normal);
+    filter: drop-shadow(0 2px 5px rgba(255, 255, 255, 0.3));
+}
+
+.custom-select-trigger.active .custom-select-arrow {
+    transform: rotate(180deg);
+}
+
+/* Dropdown Options */
+.custom-select-options {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, var(--card-bg) 0%, #252550 100%);
+    border: 3px solid var(--primary-color);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 60px rgba(13, 14, 255, 0.7);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-25px);
+    transition: all var(--transition-normal);
+    max-height: 450px;
+    overflow-y: auto;
+    backdrop-filter: blur(10px);
+}
+
+.custom-select-options.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.custom-select-option {
+    padding: 20px 28px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: white;
+    border-left: 5px solid transparent;
+    position: relative;
+    letter-spacing: 0.5px;
+}
+
+.custom-select-option::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    background: linear-gradient(90deg,
+            var(--gradient-start),
+            var(--gradient-end));
+    transition: width var(--transition-fast);
+    opacity: 0.3;
+}
+
+.custom-select-option:first-child {
+    border-radius: 14px 14px 0 0;
+}
+
+.custom-select-option:last-child {
+    border-radius: 0 0 14px 14px;
+}
+
+.custom-select-option:hover {
+    background: linear-gradient(135deg,
+            var(--gradient-start) 0%,
+            var(--gradient-end) 100%);
+    border-left-color: white;
+    transform: translateX(8px);
+    margin-right: 8px;
+}
+
+.custom-select-option:hover::before {
+    width: 100%;
+}
+
+.custom-select-option.selected {
+    background: linear-gradient(135deg,
+            rgba(13, 14, 255, 0.35) 0%,
+            rgba(107, 14, 255, 0.35) 100%);
+    border-left-color: var(--primary-color);
+    box-shadow: inset 0 0 20px rgba(13, 14, 255, 0.3);
+}
+
+/* Scrollbar for dropdown */
+.custom-select-options::-webkit-scrollbar {
+    width: 10px;
+}
+
+.custom-select-options::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.custom-select-options::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+    border: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+.custom-select-options::-webkit-scrollbar-thumb:hover {
+    background: var(--gradient-end);
+}
+
+/* ============================================
+   WEAPON CARD
+   ============================================ */
+.weapon-card {
+    background: linear-gradient(135deg, var(--card-bg) 0%, #252550 100%);
+    border-radius: var(--radius-xl);
+    padding: 3.5rem;
+    box-shadow: 0 20px 70px rgba(0, 0, 0, 0.6);
+    border: 2px solid rgba(13, 14, 255, 0.35);
+    transition: all var(--transition-slow);
+    position: relative;
+    overflow: hidden;
+}
+
+.weapon-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at top left,
+            rgba(13, 14, 255, 0.15),
+            transparent 60%);
+    pointer-events: none;
+}
+
+.weapon-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 25px 80px rgba(13, 14, 255, 0.5);
+    border-color: var(--primary-color);
+}
+
+/* ============================================
+   WEAPON IMAGE
+   ============================================ */
+.weapon-image-wrapper {
+    position: relative;
+    padding: 2.5rem;
+    background: radial-gradient(circle,
+            rgba(13, 14, 255, 0.15) 0%,
+            transparent 70%);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-slow);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.weapon-image-wrapper:hover {
+    transform: scale(1.08) rotate(3deg);
+    background: radial-gradient(circle,
+            rgba(107, 14, 255, 0.2) 0%,
+            transparent 70%);
+}
+
+.weapon-image {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 12px 35px rgba(13, 14, 255, 0.6));
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-slow);
+}
+
+.weapon-card:hover .weapon-image {
+    filter: drop-shadow(0 18px 45px rgba(107, 14, 255, 0.8));
+}
+
+/* ============================================
+   WEAPON TITLE
+   ============================================ */
+.weapon-section-title {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 4px solid var(--primary-color);
+    text-shadow: 0 0 25px rgba(13, 14, 255, 0.7);
+    position: relative;
+    text-align: center;
+}
+
+.weapon-section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 4px;
+    background: var(--gradient-end);
+    box-shadow: 0 0 15px rgba(107, 14, 255, 0.8);
+}
+
+/* ============================================
+   ATTACHMENTS
+   ============================================ */
+.attachment-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Make the 5th item span full width and center it */
+.attachment-list .attachment-item:nth-child(5) {
+    grid-column: 1 / -1;
+    max-width: 50%;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.attachment-item {
+    background: linear-gradient(135deg,
+            rgba(13, 14, 255, 0.18) 0%,
+            rgba(107, 14, 255, 0.18) 100%);
+    padding: 22px 28px;
+    border-radius: var(--radius-md);
+    border-left: 5px solid var(--primary-color);
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.attachment-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.12),
+            transparent);
+    transition: left 0.6s ease;
+}
+
+.attachment-item:hover::before {
+    left: 100%;
+}
+
+.attachment-item:hover {
+    transform: translateY(-5px);
+    background: linear-gradient(135deg,
+            rgba(13, 14, 255, 0.28) 0%,
+            rgba(107, 14, 255, 0.28) 100%);
+    border-left-width: 7px;
+    box-shadow: 0 8px 25px rgba(13, 14, 255, 0.4);
+}
+
+.attachment-item span {
+    display: block;
+    font-size: 0.95rem;
+    color: var(--primary-color);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 6px;
+    text-shadow: 0 0 10px rgba(13, 14, 255, 0.5);
+}
+
+.attachment-item strong {
+    display: block;
+    font-size: 1.3rem;
+    color: white;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.attachment-item .unlock-info {
+    display: block;
+    font-size: 0.9rem;
+    color: #ffd700;
+    font-weight: 600;
+    margin-top: 10px;
+    padding: 7px 15px;
+    background: rgba(255, 215, 0, 0.15);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid #ffd700;
+    width: fit-content;
+    box-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+    transition: var(--transition-fast);
+}
+
+.attachment-item:hover .unlock-info {
+    background: rgba(255, 215, 0, 0.25);
+    transform: translateX(5px);
+}
+
+.attachment-item .unlock-info::before {
+    content: '🔓 ';
+    margin-right: 6px;
+    filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.8));
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+.weapon-card {
+    animation: fadeInUp 0.7s ease forwards;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 2.2rem;
+        letter-spacing: 2px;
+    }
+
+    .custom-select-wrapper {
+        max-width: 100%;
+    }
+
+    .custom-select-trigger {
+        padding: 16px 22px;
+        font-size: 1.2rem;
+    }
+
+    .custom-select-option {
+        padding: 16px 22px;
+        font-size: 1.1rem;
+    }
+
+    .weapon-card {
+        padding: 2.5rem 2rem;
+    }
+
+    .weapon-section-title {
+        font-size: 1.8rem;
+        letter-spacing: 2px;
+    }
+
+    .weapon-image-wrapper {
+        padding: 1.5rem;
+    }
+
+    .attachment-list {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .attachment-list .attachment-item:nth-child(5) {
+        grid-column: auto;
+        max-width: 100%;
+    }
+
+    .attachment-item {
+        padding: 18px 22px;
+    }
+
+    .attachment-item strong {
+        font-size: 1.15rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .page-title {
+        font-size: 1.8rem;
+    }
+
+    .custom-select-trigger {
+        padding: 14px 18px;
+        font-size: 1.1rem;
+    }
+
+    .weapon-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .weapon-section-title {
+        font-size: 1.5rem;
+    }
+
+    .attachment-item {
+        padding: 16px 18px;
+    }
+}

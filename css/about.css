@@ -1,0 +1,394 @@
+/* ============================================
+   ABOUT PAGE STYLES
+   Specific styles for the team/about page
+   ============================================ */
+
+/* ============================================
+   SECTION TITLE
+   ============================================ */
+.section-title {
+    color: var(--primary-color);
+    font-size: 2.8rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-shadow: 0 0 40px rgba(13, 14, 255, 0.7),
+        0 0 80px rgba(13, 14, 255, 0.3);
+    position: relative;
+    padding-bottom: 1.5rem;
+    margin-bottom: 3.5rem;
+    text-align: center;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 5px;
+    background: linear-gradient(90deg,
+            transparent,
+            var(--gradient-start),
+            var(--gradient-end),
+            transparent);
+    border-radius: var(--radius-full);
+    box-shadow: 0 2px 15px rgba(13, 14, 255, 0.6);
+}
+
+/* ============================================
+   MEMBERS GRID
+   ============================================ */
+.members-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3.5rem;
+}
+
+/* ============================================
+   MEMBER CARDS
+   ============================================ */
+.member-card {
+    background: linear-gradient(135deg, var(--card-bg) 0%, #252550 100%);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+    text-align: center;
+    transition: all var(--transition-slow);
+    border: 2px solid rgba(13, 14, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+/* Animated border gradient */
+.member-card::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    background: linear-gradient(45deg,
+            var(--gradient-start),
+            var(--gradient-end),
+            var(--gradient-accent),
+            var(--gradient-start));
+    border-radius: var(--radius-lg);
+    opacity: 0;
+    transition: opacity var(--transition-slow);
+    z-index: -1;
+    background-size: 300% 300%;
+    animation: gradientShift 4s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.member-card:hover::before {
+    opacity: 1;
+}
+
+.member-card:hover {
+    transform: translateY(-18px) scale(1.04);
+    box-shadow: 0 25px 70px rgba(13, 14, 255, 0.6);
+    border-color: transparent;
+}
+
+/* Member Avatar */
+.member-avatar {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    border: 5px solid var(--primary-color);
+    box-shadow: 0 0 35px rgba(13, 14, 255, 0.7),
+        inset 0 0 20px rgba(13, 14, 255, 0.2);
+    transition: all var(--transition-slow);
+    object-fit: cover;
+    background: linear-gradient(135deg,
+            var(--gradient-start),
+            var(--gradient-end));
+    position: relative;
+}
+
+.member-card:hover .member-avatar {
+    transform: scale(1.12) rotate(8deg);
+    box-shadow: 0 0 50px rgba(107, 14, 255, 0.9),
+        inset 0 0 30px rgba(107, 14, 255, 0.3);
+    border-width: 6px;
+}
+
+/* Member Name */
+.member-name {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 15px rgba(13, 14, 255, 0.6);
+    letter-spacing: 0.5px;
+}
+
+/* Member Role */
+.member-role {
+    font-size: 1.05rem;
+    color: var(--primary-color);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 10px rgba(13, 14, 255, 0.5);
+}
+
+/* Member Status */
+.member-status {
+    display: inline-block;
+    padding: 6px 18px;
+    border-radius: var(--radius-full);
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-top: 0.75rem;
+    letter-spacing: 0.5px;
+    transition: var(--transition-normal);
+}
+
+.status-online {
+    background: rgba(67, 181, 129, 0.25);
+    color: #43b581;
+    border: 2px solid #43b581;
+    box-shadow: 0 0 15px rgba(67, 181, 129, 0.4);
+}
+
+.status-offline {
+    background: rgba(116, 127, 141, 0.25);
+    color: #747f8d;
+    border: 2px solid #747f8d;
+}
+
+.status-idle {
+    background: rgba(250, 166, 26, 0.25);
+    color: #faa61a;
+    border: 2px solid #faa61a;
+    box-shadow: 0 0 15px rgba(250, 166, 26, 0.4);
+}
+
+.member-card:hover .member-status {
+    transform: scale(1.1);
+}
+
+/* Member Discord */
+.member-discord {
+    font-size: 0.95rem;
+    color: #7289da;
+    margin-top: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 600;
+}
+
+.discord-icon {
+    width: 22px;
+    height: 22px;
+    filter: drop-shadow(0 2px 5px rgba(114, 137, 218, 0.5));
+}
+
+/* ============================================
+   STATS SECTION
+   ============================================ */
+.stats-section {
+    background: linear-gradient(135deg, var(--card-bg) 0%, #252550 100%);
+    border-radius: var(--radius-xl);
+    padding: 3.5rem;
+    margin-top: 3.5rem;
+    border: 2px solid rgba(13, 14, 255, 0.3);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.stats-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at top right,
+            rgba(13, 14, 255, 0.1),
+            transparent 60%);
+    pointer-events: none;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 2rem;
+    background: rgba(13, 14, 255, 0.12);
+    border-radius: var(--radius-md);
+    border: 2px solid rgba(13, 14, 255, 0.3);
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-item::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle,
+            rgba(13, 14, 255, 0.3),
+            transparent);
+    transform: translate(-50%, -50%);
+    transition: width 0.5s ease, height 0.5s ease;
+    border-radius: 50%;
+}
+
+.stat-item:hover::before {
+    width: 200%;
+    height: 200%;
+}
+
+.stat-item:hover {
+    transform: translateY(-8px) scale(1.05);
+    background: rgba(13, 14, 255, 0.2);
+    box-shadow: 0 15px 40px rgba(13, 14, 255, 0.4);
+    border-color: var(--primary-color);
+}
+
+.stat-number {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: var(--primary-color);
+    text-shadow: 0 0 25px rgba(13, 14, 255, 0.7);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.85);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-top: 0.75rem;
+    font-weight: 600;
+}
+
+/* ============================================
+   MEMBER CARD ANIMATIONS
+   ============================================ */
+.member-card {
+    animation: fadeInUp 0.7s ease forwards;
+    opacity: 0;
+}
+
+.member-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.member-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.member-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.member-card:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.member-card:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+.member-card:nth-child(6) {
+    animation-delay: 0.6s;
+}
+
+.member-card:nth-child(7) {
+    animation-delay: 0.7s;
+}
+
+.member-card:nth-child(8) {
+    animation-delay: 0.8s;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 2.2rem;
+        letter-spacing: 2px;
+    }
+
+    .members-grid {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .member-card {
+        padding: 2rem;
+    }
+
+    .member-avatar {
+        width: 140px;
+        height: 140px;
+    }
+
+    .stats-section {
+        padding: 2.5rem 2rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .stat-number {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    .member-name {
+        font-size: 1.4rem;
+    }
+
+    .member-role {
+        font-size: 0.95rem;
+    }
+
+    .stats-section {
+        padding: 2rem 1.5rem;
+    }
+}
