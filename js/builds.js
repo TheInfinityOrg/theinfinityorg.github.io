@@ -9,6 +9,7 @@
 const weapons = {
     ffar1: {
         name: 'FFAR 1',
+        rank: 1,
         img: '../img/assets/FFAR 1.png',
         attachments: [
             {
@@ -40,6 +41,7 @@ const weapons = {
     },
     gpr91: {
         name: 'GPR 91',
+        rank: 2,
         img: '../img/assets/GPR 91.png',
         attachments: [
             {
@@ -71,6 +73,7 @@ const weapons = {
     },
     lc10: {
         name: 'LC10',
+        rank: 3,
         img: '../img/assets/LC10.png',
         attachments: [
             {
@@ -112,6 +115,103 @@ const weaponImage = document.getElementById('weaponImage');
 const weaponTitle = document.getElementById('weaponTitle');
 const attachmentList = document.getElementById('attachmentList');
 const weaponCard = document.getElementById('weaponCard');
+const weaponRankingList = document.getElementById('weaponRankingList');
+
+const weaponOrder = Object.keys(weapons).sort((a, b) => {
+    const rankA = weapons[a].rank ?? Number.MAX_SAFE_INTEGER;
+    const rankB = weapons[b].rank ?? Number.MAX_SAFE_INTEGER;
+    return rankA - rankB;
+});
+
+let optionElements = [];
+let rankingItems = [];
+let currentIndex = 0;
+
+function formatWeaponLabel(weapon, includeRank = true) {
+    if (!weapon) return '';
+    if (!includeRank || !weapon.rank) {
+        return weapon.name;
+    }
+    return `${weapon.rank}° ${weapon.name}`;
+}
+
+function closeDropdown() {
+    if (trigger) {
+        trigger.classList.remove('active');
+    }
+    if (options) {
+        options.classList.remove('active');
+    }
+}
+
+function updateSelectedText(weaponKey) {
+    if (!selectedText) return;
+    const weapon = weapons[weaponKey];
+    if (!weapon) return;
+    selectedText.textContent = formatWeaponLabel(weapon);
+}
+
+function highlightSelection(weaponKey) {
+    optionElements.forEach(opt => {
+        const isActive = opt.dataset.value === weaponKey;
+        opt.classList.toggle('selected', isActive);
+        if (!isActive) {
+            opt.style.background = '';
+        }
+    });
+
+    rankingItems.forEach(item => {
+        const isActive = item.dataset.value === weaponKey;
+        item.classList.toggle('active', isActive);
+    });
+}
+
+function handleWeaponSelection(weaponKey) {
+    if (!weaponKey || !weapons[weaponKey]) return;
+    loadWeapon(weaponKey);
+    updateSelectedText(weaponKey);
+    highlightSelection(weaponKey);
+    currentIndex = optionElements.findIndex(opt => opt.dataset.value === weaponKey);
+}
+
+function populateDropdown() {
+    if (!options) return;
+    options.innerHTML = '';
+
+    optionElements = weaponOrder.map(key => {
+        const option = document.createElement('div');
+        option.className = 'custom-select-option';
+        option.dataset.value = key;
+        option.textContent = formatWeaponLabel(weapons[key]);
+        option.addEventListener('click', function (e) {
+            e.stopPropagation();
+            closeDropdown();
+            handleWeaponSelection(key);
+        });
+        options.appendChild(option);
+        return option;
+    });
+}
+
+function renderWeaponRanking() {
+    if (!weaponRankingList) return;
+    weaponRankingList.innerHTML = '';
+
+    rankingItems = weaponOrder.map((key, index) => {
+        const weapon = weapons[key];
+        const item = document.createElement('li');
+        item.className = 'weapon-ranking-item';
+        item.dataset.value = key;
+        const displayRank = weapon.rank ?? (index + 1);
+        item.innerHTML = `<span class="weapon-rank-number">${displayRank}°</span> ${weapon.name}`;
+        item.addEventListener('click', () => {
+            handleWeaponSelection(key);
+            closeDropdown();
+        });
+        weaponRankingList.appendChild(item);
+        return item;
+    });
+}
 
 // ============================================
 // DROPDOWN FUNCTIONALITY
@@ -131,32 +231,6 @@ if (trigger && options) {
             options.classList.remove('active');
         }
     });
-
-    // Handle option selection
-    const optionElements = document.querySelectorAll('.custom-select-option');
-
-    optionElements.forEach(option => {
-        option.addEventListener('click', function (e) {
-            e.stopPropagation();
-
-            const value = this.dataset.value;
-            const text = this.textContent.trim();
-
-            // Update selected state
-            optionElements.forEach(opt => opt.classList.remove('selected'));
-            this.classList.add('selected');
-
-            // Update trigger text
-            selectedText.textContent = text;
-
-            // Close dropdown
-            trigger.classList.remove('active');
-            options.classList.remove('active');
-
-            // Load weapon
-            loadWeapon(value);
-        });
-    });
 }
 
 // ============================================
@@ -166,6 +240,7 @@ function loadWeapon(weaponKey) {
     const weapon = weapons[weaponKey];
 
     if (!weapon) return;
+    if (!weaponCard) return;
 
     // Add fade out animation
     weaponCard.style.opacity = '0';
@@ -221,11 +296,9 @@ function loadWeapon(weaponKey) {
 // KEYBOARD NAVIGATION
 // ============================================
 if (options) {
-    let currentIndex = 0;
-    const optionElements = Array.from(document.querySelectorAll('.custom-select-option'));
-
     document.addEventListener('keydown', function (e) {
         if (!options.classList.contains('active')) return;
+        if (!optionElements.length) return;
 
         switch (e.key) {
             case 'ArrowDown':
@@ -248,8 +321,7 @@ if (options) {
                 break;
 
             case 'Escape':
-                trigger.classList.remove('active');
-                options.classList.remove('active');
+                closeDropdown();
                 break;
         }
     });
@@ -259,7 +331,7 @@ if (options) {
             if (i === index) {
                 opt.style.background = 'linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%)';
                 opt.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-            } else {
+            } else if (!opt.classList.contains('selected')) {
                 opt.style.background = '';
             }
         });
@@ -270,8 +342,13 @@ if (options) {
 // INITIALIZE ON DOM LOAD
 // ============================================
 document.addEventListener('DOMContentLoaded', function () {
-    // Load first weapon by default
-    loadWeapon('ffar1');
+    populateDropdown();
+    renderWeaponRanking();
+
+    const defaultWeaponKey = weaponOrder[0] || Object.keys(weapons)[0];
+    if (defaultWeaponKey) {
+        handleWeaponSelection(defaultWeaponKey);
+    }
 
     // Add smooth transitions
     if (weaponCard) {
