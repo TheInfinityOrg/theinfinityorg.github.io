@@ -44,11 +44,16 @@
   </header>
 
   <div class="container py-5">
-    <h2 class="section-title">🎮 I MEMBRI</h2>
-
-    <!-- MEMBERS GRID -->
+    <!-- HUMAN MEMBERS SECTION -->
+    <h2 class="section-title">👥 MEMBRI</h2>
     <div class="members-grid" id="membersGrid">
-      <!-- I membri verranno caricati qui dinamicamente -->
+      <!-- I membri umani verranno caricati qui dinamicamente -->
+    </div>
+
+    <!-- BOTS SECTION -->
+    <h2 class="section-title mt-5">🤖 BOT</h2>
+    <div class="members-grid" id="botsGrid">
+      <!-- I bot verranno caricati qui dinamicamente -->
     </div>
 
     <!-- SERVER STATS -->
@@ -62,6 +67,10 @@
         <div class="stat-item">
           <div class="stat-number" id="onlineMembers">0</div>
           <div class="stat-label">Online Ora</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="totalBots">0</div>
+          <div class="stat-label">Bot Attivi</div>
         </div>
       </div>
     </div>

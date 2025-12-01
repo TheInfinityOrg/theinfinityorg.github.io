@@ -1,23 +1,27 @@
 /* ============================================
    ABOUT PAGE STYLES
-   Specific styles for the team/about page
+   Dynamic member cards and statistics
    ============================================ */
 
 /* ============================================
-   SECTION TITLE
+   HEADER
+   ============================================ */
+header {
+    margin-top: 56px;
+    padding: 4rem 2rem !important;
+}
+
+/* ============================================
+   SECTION TITLES
    ============================================ */
 .section-title {
     color: var(--primary-color);
-    font-size: 2.8rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    text-shadow: 0 0 40px rgba(13, 14, 255, 0.7),
-        0 0 80px rgba(13, 14, 255, 0.3);
-    position: relative;
-    padding-bottom: 1.5rem;
-    margin-bottom: 3.5rem;
+    font-weight: 800;
+    font-size: 2.5rem;
     text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+    padding-bottom: 1rem;
 }
 
 .section-title::after {
@@ -26,15 +30,13 @@
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 120px;
+    width: 100px;
     height: 5px;
     background: linear-gradient(90deg,
-            transparent,
             var(--gradient-start),
-            var(--gradient-end),
-            transparent);
+            var(--gradient-end));
     border-radius: var(--radius-full);
-    box-shadow: 0 2px 15px rgba(13, 14, 255, 0.6);
+    box-shadow: 0 2px 10px rgba(13, 14, 255, 0.4);
 }
 
 /* ============================================
@@ -42,300 +44,328 @@
    ============================================ */
 .members-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 2rem;
-    margin-bottom: 3.5rem;
+    margin-bottom: 4rem;
 }
 
 /* ============================================
-   MEMBER CARDS
+   MEMBER CARD
    ============================================ */
 .member-card {
-    background: linear-gradient(135deg, var(--card-bg) 0%, #252550 100%);
+    background: rgba(255, 255, 255, 0.98);
     border-radius: var(--radius-lg);
-    padding: 2.5rem;
-    text-align: center;
-    transition: all var(--transition-slow);
-    border: 2px solid rgba(13, 14, 255, 0.3);
+    padding: 2rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    transition: all var(--transition-normal);
     position: relative;
     overflow: hidden;
-    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
-/* Animated border gradient */
 .member-card::before {
     content: '';
     position: absolute;
-    top: -3px;
-    left: -3px;
-    right: -3px;
-    bottom: -3px;
-    background: linear-gradient(45deg,
-            var(--gradient-start),
-            var(--gradient-end),
-            var(--gradient-accent),
-            var(--gradient-start));
-    border-radius: var(--radius-lg);
-    opacity: 0;
-    transition: opacity var(--transition-slow);
-    z-index: -1;
-    background-size: 300% 300%;
-    animation: gradientShift 4s ease infinite;
-}
-
-@keyframes gradientShift {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(13, 14, 255, 0.08),
+            transparent);
+    transition: left 0.6s ease;
 }
 
 .member-card:hover::before {
-    opacity: 1;
+    left: 100%;
 }
 
 .member-card:hover {
-    transform: translateY(-18px) scale(1.04);
-    box-shadow: 0 25px 70px rgba(13, 14, 255, 0.6);
-    border-color: transparent;
+    transform: translateY(-8px);
+    box-shadow: 0 15px 50px rgba(13, 14, 255, 0.25);
 }
 
-/* Member Avatar */
-.member-avatar {
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    margin: 0 auto 1.5rem;
-    border: 5px solid var(--primary-color);
-    box-shadow: 0 0 35px rgba(13, 14, 255, 0.7),
-        inset 0 0 20px rgba(13, 14, 255, 0.2);
-    transition: all var(--transition-slow);
-    object-fit: cover;
-    background: linear-gradient(135deg,
-            var(--gradient-start),
-            var(--gradient-end));
-    position: relative;
+/* Online status border */
+.member-card.online {
+    border: 2px solid rgba(67, 181, 129, 0.3);
 }
 
-.member-card:hover .member-avatar {
-    transform: scale(1.12) rotate(8deg);
-    box-shadow: 0 0 50px rgba(107, 14, 255, 0.9),
-        inset 0 0 30px rgba(107, 14, 255, 0.3);
-    border-width: 6px;
-}
-
-/* Member Name */
-.member-name {
-    font-size: 1.6rem;
-    font-weight: 800;
-    color: white;
-    margin-bottom: 0.5rem;
-    text-shadow: 0 2px 15px rgba(13, 14, 255, 0.6);
-    letter-spacing: 0.5px;
-}
-
-/* Member Role */
-.member-role {
-    font-size: 1.05rem;
-    color: var(--primary-color);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin-bottom: 1rem;
-    text-shadow: 0 0 10px rgba(13, 14, 255, 0.5);
-}
-
-/* Member Status */
-.member-status {
-    display: inline-block;
-    padding: 6px 18px;
-    border-radius: var(--radius-full);
-    font-size: 0.9rem;
-    font-weight: 700;
-    margin-top: 0.75rem;
-    letter-spacing: 0.5px;
-    transition: var(--transition-normal);
-}
-
-.status-online {
-    background: rgba(67, 181, 129, 0.25);
-    color: #43b581;
-    border: 2px solid #43b581;
-    box-shadow: 0 0 15px rgba(67, 181, 129, 0.4);
-}
-
-.status-offline {
-    background: rgba(116, 127, 141, 0.25);
-    color: #747f8d;
-    border: 2px solid #747f8d;
-}
-
-.status-idle {
-    background: rgba(250, 166, 26, 0.25);
-    color: #faa61a;
-    border: 2px solid #faa61a;
-    box-shadow: 0 0 15px rgba(250, 166, 26, 0.4);
-}
-
-.member-card:hover .member-status {
-    transform: scale(1.1);
-}
-
-/* Member Discord */
-.member-discord {
-    font-size: 0.95rem;
-    color: #7289da;
-    margin-top: 0.75rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    font-weight: 600;
-}
-
-.discord-icon {
-    width: 22px;
-    height: 22px;
-    filter: drop-shadow(0 2px 5px rgba(114, 137, 218, 0.5));
+.member-card.offline {
+    border: 2px solid rgba(116, 127, 141, 0.2);
 }
 
 /* ============================================
-   STATS SECTION
+   MEMBER AVATAR
    ============================================ */
-.stats-section {
-    background: linear-gradient(135deg, var(--card-bg) 0%, #252550 100%);
-    border-radius: var(--radius-xl);
-    padding: 3.5rem;
-    margin-top: 3.5rem;
-    border: 2px solid rgba(13, 14, 255, 0.3);
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+.member-avatar-container {
     position: relative;
-    overflow: hidden;
+    margin-bottom: 1.5rem;
 }
 
-.stats-section::before {
-    content: '';
+.member-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 4px solid rgba(13, 14, 255, 0.1);
+    transition: all var(--transition-normal);
+    object-fit: cover;
+}
+
+.member-card:hover .member-avatar {
+    border-color: var(--primary-color);
+    transform: scale(1.05);
+}
+
+/* Status Indicator */
+.status-indicator {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at top right,
-            rgba(13, 14, 255, 0.1),
-            transparent 60%);
-    pointer-events: none;
+    bottom: 5px;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.status-indicator.online {
+    background-color: #43b581;
+    animation: pulse-online 2s ease-in-out infinite;
+}
+
+.status-indicator.offline {
+    background-color: #747f8d;
+}
+
+@keyframes pulse-online {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(67, 181, 129, 0.7);
+    }
+
+    50% {
+        box-shadow: 0 0 0 8px rgba(67, 181, 129, 0);
+    }
+}
+
+/* ============================================
+   MEMBER INFO
+   ============================================ */
+.member-info {
+    width: 100%;
+}
+
+.member-name {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 0.5rem;
+    word-break: break-word;
+}
+
+.member-status {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    border-radius: var(--radius-full);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+}
+
+.member-status.online {
+    background: rgba(67, 181, 129, 0.15);
+    color: #43b581;
+}
+
+.member-status.offline {
+    background: rgba(116, 127, 141, 0.15);
+    color: #747f8d;
+}
+
+/* ============================================
+   MEMBER ACTIVITY
+   ============================================ */
+.member-activity {
+    margin-top: 1rem;
+    padding: 0.8rem;
+    background: rgba(13, 14, 255, 0.05);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.activity-icon {
+    font-size: 1.2rem;
+}
+
+.activity-name {
+    font-size: 0.95rem;
+    color: #666;
+    font-weight: 500;
+}
+
+/* ============================================
+   BOT BADGE
+   ============================================ */
+.bot-badge {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    background: linear-gradient(135deg, #5865F2, #7289DA);
+    color: white;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 2px 8px rgba(88, 101, 242, 0.3);
+}
+
+/* Bot Card Styling */
+.bot-card {
+    background: linear-gradient(135deg,
+            rgba(88, 101, 242, 0.03),
+            rgba(114, 137, 218, 0.03));
+}
+
+.bot-card:hover {
+    box-shadow: 0 15px 50px rgba(88, 101, 242, 0.2);
+}
+
+/* ============================================
+   STATISTICS SECTION
+   ============================================ */
+.stats-section {
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: var(--radius-lg);
+    padding: 3rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    margin-bottom: 3rem;
+}
+
+.stats-section .section-title {
+    margin-bottom: 2rem;
 }
 
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 2rem;
-    margin-top: 2rem;
-    position: relative;
-    z-index: 1;
 }
 
 .stat-item {
     text-align: center;
     padding: 2rem;
-    background: rgba(13, 14, 255, 0.12);
+    background: linear-gradient(135deg,
+            rgba(13, 14, 255, 0.05),
+            rgba(107, 14, 255, 0.05));
     border-radius: var(--radius-md);
-    border: 2px solid rgba(13, 14, 255, 0.3);
     transition: all var(--transition-normal);
-    position: relative;
-    overflow: hidden;
-}
-
-.stat-item::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: radial-gradient(circle,
-            rgba(13, 14, 255, 0.3),
-            transparent);
-    transform: translate(-50%, -50%);
-    transition: width 0.5s ease, height 0.5s ease;
-    border-radius: 50%;
-}
-
-.stat-item:hover::before {
-    width: 200%;
-    height: 200%;
 }
 
 .stat-item:hover {
-    transform: translateY(-8px) scale(1.05);
-    background: rgba(13, 14, 255, 0.2);
-    box-shadow: 0 15px 40px rgba(13, 14, 255, 0.4);
-    border-color: var(--primary-color);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(13, 14, 255, 0.15);
 }
 
 .stat-number {
     font-size: 3.5rem;
     font-weight: 900;
-    color: var(--primary-color);
-    text-shadow: 0 0 25px rgba(13, 14, 255, 0.7);
-    line-height: 1;
+    background: linear-gradient(135deg,
+            var(--gradient-start),
+            var(--gradient-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     margin-bottom: 0.5rem;
 }
 
 .stat-label {
-    font-size: 1.05rem;
-    color: rgba(255, 255, 255, 0.85);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin-top: 0.75rem;
+    font-size: 1.1rem;
+    color: #666;
     font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 /* ============================================
-   MEMBER CARD ANIMATIONS
+   LOADING STATE
    ============================================ */
-.member-card {
-    animation: fadeInUp 0.7s ease forwards;
-    opacity: 0;
+.loading-container {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 2rem;
 }
 
-.member-card:nth-child(1) {
-    animation-delay: 0.1s;
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 5px solid rgba(13, 14, 255, 0.1);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1.5rem;
 }
 
-.member-card:nth-child(2) {
-    animation-delay: 0.2s;
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
-.member-card:nth-child(3) {
-    animation-delay: 0.3s;
+.loading-container p {
+    font-size: 1.2rem;
+    color: #666;
+    font-weight: 500;
 }
 
-.member-card:nth-child(4) {
-    animation-delay: 0.4s;
+/* ============================================
+   ERROR STATE
+   ============================================ */
+.error-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 2rem;
+    background: rgba(255, 59, 48, 0.05);
+    border-radius: var(--radius-lg);
+    border: 2px solid rgba(255, 59, 48, 0.2);
 }
 
-.member-card:nth-child(5) {
-    animation-delay: 0.5s;
+.error-message p {
+    font-size: 1.3rem;
+    color: #ff3b30;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
 }
 
-.member-card:nth-child(6) {
-    animation-delay: 0.6s;
+.error-details {
+    font-size: 1rem;
+    color: #666;
+    font-weight: 400;
 }
 
-.member-card:nth-child(7) {
-    animation-delay: 0.7s;
+/* ============================================
+   NO MEMBERS STATE
+   ============================================ */
+.no-members {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 2rem;
 }
 
-.member-card:nth-child(8) {
-    animation-delay: 0.8s;
+.no-members p {
+    font-size: 1.3rem;
+    color: #666;
+    font-weight: 500;
 }
 
 /* ============================================
@@ -343,52 +373,46 @@
    ============================================ */
 @media (max-width: 768px) {
     .section-title {
-        font-size: 2.2rem;
-        letter-spacing: 2px;
+        font-size: 2rem;
     }
 
     .members-grid {
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         gap: 1.5rem;
     }
 
     .member-card {
-        padding: 2rem;
+        padding: 1.5rem;
     }
 
     .member-avatar {
-        width: 140px;
-        height: 140px;
+        width: 80px;
+        height: 80px;
+    }
+
+    .member-name {
+        font-size: 1.2rem;
     }
 
     .stats-section {
-        padding: 2.5rem 2rem;
-    }
-
-    .stats-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
+        padding: 2rem;
     }
 
     .stat-number {
-        font-size: 3rem;
+        font-size: 2.5rem;
     }
 }
 
 @media (max-width: 576px) {
-    .section-title {
-        font-size: 1.8rem;
+    .members-grid {
+        grid-template-columns: 1fr;
     }
 
-    .member-name {
-        font-size: 1.4rem;
+    .stats-grid {
+        grid-template-columns: 1fr;
     }
 
-    .member-role {
-        font-size: 0.95rem;
-    }
-
-    .stats-section {
-        padding: 2rem 1.5rem;
+    header {
+        padding: 3rem 1.5rem !important;
     }
 }

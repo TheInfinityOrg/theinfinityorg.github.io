@@ -166,6 +166,63 @@ section.card {
 }
 
 /* ============================================
+   DISCORD WIDGET
+   ============================================ */
+.discord-widget-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    background: rgba(13, 14, 255, 0.05);
+    border-radius: var(--radius-lg);
+    border: 2px solid rgba(13, 14, 255, 0.15);
+    transition: all var(--transition-normal);
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.discord-widget-container:hover {
+    background: rgba(13, 14, 255, 0.08);
+    border-color: rgba(13, 14, 255, 0.3);
+    box-shadow: 0 8px 30px rgba(13, 14, 255, 0.2);
+    transform: translateY(-4px);
+}
+
+.discord-widget-container iframe {
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    transition: all var(--transition-normal);
+}
+
+.discord-widget-container:hover iframe {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* Join Section */
+.join-section {
+    padding: 2rem;
+}
+
+.join-section h3 {
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.join-section p {
+    color: #666;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.btn-lg {
+    padding: 16px 50px;
+    font-size: 1.25rem;
+}
+
+/* ============================================
    RESPONSIVE DESIGN
    ============================================ */
 @media (max-width: 768px) {
@@ -185,6 +242,25 @@ section.card {
         padding: 12px 30px;
         font-size: 1rem;
     }
+
+    .discord-widget-container {
+        padding: 1rem;
+        max-width: 350px;
+    }
+
+    .discord-widget-container iframe {
+        width: 100%;
+        max-width: 350px;
+        height: 450px;
+    }
+
+    .join-section {
+        padding: 1.5rem;
+    }
+
+    .join-section h3 {
+        font-size: 1.6rem;
+    }
 }
 
 @media (max-width: 576px) {
@@ -194,5 +270,29 @@ section.card {
 
     section.card {
         padding: 1.5rem;
+    }
+
+    .discord-widget-container {
+        padding: 0.75rem;
+        max-width: 300px;
+    }
+
+    .discord-widget-container iframe {
+        width: 100%;
+        max-width: 300px;
+        height: 400px;
+    }
+
+    .join-section {
+        padding: 1rem;
+    }
+
+    .join-section h3 {
+        font-size: 1.4rem;
+    }
+
+    .btn-lg {
+        padding: 14px 40px;
+        font-size: 1.1rem;
     }
 }

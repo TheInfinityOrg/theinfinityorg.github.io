@@ -1,147 +1,266 @@
-/**
- * THE INFINITY - ABOUT PAGE JAVASCRIPT
- * Handles member loading and statistics
- */
+// ============================================
+// DISCORD API INTEGRATION FOR ABOUT PAGE
+// Fetches and displays server members dynamically
+// Separates human members from bots
+// ============================================
+
+const DISCORD_SERVER_ID = '1094314459851407541';
+const DISCORD_WIDGET_API = `https://discord.com/api/guilds/${DISCORD_SERVER_ID}/widget.json`;
 
 // ============================================
-// MEMBER DATA
+// FETCH DISCORD DATA
 // ============================================
-const members = [
-    {
-        name: 'ElevenCorvo',
-        username: 'elevencorvo',
-        role: '👑 Fondatore',
-        avatar: 'https://cdn.discordapp.com/avatars/697395013994414093/b4f1743f2cc95aec58a6676d197ab2b9.png?size=1024',
-        status: 'online'
-    },
-    {
-        name: 'FirePhoenix',
-        username: 'firephoenix3108',
-        role: '👑 Co Fondatore',
-        avatar: 'https://cdn.discordapp.com/avatars/490142694518030357/51981b62ad9c6fab9688e728ab8c593f.png?size=1024',
-        status: 'online'
-    },
-    {
-        name: 'Buccia_Darancia',
-        username: 'buccia_darancia',
-        role: '🛡️ Admin',
-        avatar: 'https://cdn.discordapp.com/avatars/428250583317610497/fc3e1e7b7ef876752664db9f2d7b85e7.png?size=1024',
-        status: 'online'
-    },
-    {
-        name: 'sgr.fire',
-        username: 'sgr.fire',
-        role: '🛡️ Staff',
-        avatar: 'https://cdn.discordapp.com/avatars/715107326234984506/4edb8dfc24b4e093c6c67aee4737b57b.png?size=1024',
-        status: 'online'
-    }
-];
+async function fetchDiscordMembers() {
+    try {
+        const response = await fetch(DISCORD_WIDGET_API);
 
-// ============================================
-// DOM ELEMENTS
-// ============================================
-const membersGrid = document.getElementById('membersGrid');
-const totalMembersEl = document.getElementById('totalMembers');
-const onlineMembersEl = document.getElementById('onlineMembers');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
-// ============================================
-// LOAD MEMBERS FUNCTION
-// ============================================
-function loadMembers() {
-    if (!membersGrid) return;
-
-    members.forEach((member, index) => {
-        const statusClass = `status-${member.status}`;
-        const statusText =
-            member.status === 'online' ? 'Online' :
-                member.status === 'idle' ? 'Assente' :
-                    'Offline';
-
-        const memberCard = document.createElement('div');
-        memberCard.className = 'member-card';
-        memberCard.style.animationDelay = `${(index + 1) * 0.1}s`;
-
-        memberCard.innerHTML = `
-      <img src="${member.avatar}" alt="${member.name}" class="member-avatar" loading="lazy">
-      <div class="member-name">${member.name}</div>
-      <div class="member-role">${member.role}</div>
-      <div class="member-discord">
-        <svg class="discord-icon" viewBox="0 0 24 24" fill="#7289da">
-          <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
-        </svg>
-        ${member.username}
-      </div>
-      <div class="member-status ${statusClass}">${statusText}</div>
-    `;
-
-        membersGrid.appendChild(memberCard);
-    });
-
-    // Update statistics
-    if (totalMembersEl && onlineMembersEl) {
-        const onlineCount = members.filter(m => m.status === 'online').length;
-
-        animateValue(totalMembersEl, 0, members.length, 1500);
-        animateValue(onlineMembersEl, 0, onlineCount, 1500);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching Discord data:', error);
+        showError();
+        return null;
     }
 }
 
 // ============================================
-// ANIMATE NUMBER FUNCTION
+// CHECK IF MEMBER IS BOT
 // ============================================
-function animateValue(element, start, end, duration) {
-    if (!element) return;
+function isBot(member) {
+    // Discord Widget API doesn't provide bot field
+    // Detect bots by common patterns in usernames
+    const botPatterns = [
+        /bot$/i,           // ends with "bot"
+        /^bot/i,           // starts with "bot"
+        /\[bot\]/i,        // contains [bot]
+        /\(bot\)/i,        // contains (bot)
+        /moderator/i,      // common bot names
+        /radio/i,
+        /music/i,
+        /maki/i,
+        /reaction/i,
+        /auto/i,
+        /helper/i
+    ];
 
-    let startTimestamp = null;
+    // Check if username matches any bot pattern
+    return botPatterns.some(pattern => pattern.test(member.username));
+}
 
-    const step = (timestamp) => {
-        if (!startTimestamp) startTimestamp = timestamp;
-        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-        const current = Math.floor(progress * (end - start) + start);
+// ============================================
+// DISPLAY MEMBERS
+// ============================================
+function displayMembers(members) {
+    const membersGrid = document.getElementById('membersGrid');
+    const botsGrid = document.getElementById('botsGrid');
 
+    if (!members || members.length === 0) {
+        membersGrid.innerHTML = `
+            <div class="no-members">
+                <p>Nessun membro online al momento</p>
+            </div>
+        `;
+        botsGrid.innerHTML = `
+            <div class="no-members">
+                <p>Nessun bot online al momento</p>
+            </div>
+        `;
+        return;
+    }
+
+    // Separate humans and bots using our detection function
+    const humans = members.filter(member => !isBot(member));
+    const bots = members.filter(member => isBot(member));
+
+    // Sort members: online first, then by username
+    const sortedHumans = humans.sort((a, b) => {
+        if (a.status === 'online' && b.status !== 'online') return -1;
+        if (a.status !== 'online' && b.status === 'online') return 1;
+        return a.username.localeCompare(b.username);
+    });
+
+    const sortedBots = bots.sort((a, b) => {
+        if (a.status === 'online' && b.status !== 'online') return -1;
+        if (a.status !== 'online' && b.status === 'online') return 1;
+        return a.username.localeCompare(b.username);
+    });
+
+    // Display humans
+    if (sortedHumans.length > 0) {
+        membersGrid.innerHTML = sortedHumans.map(member => createMemberCard(member, false)).join('');
+    } else {
+        membersGrid.innerHTML = `
+            <div class="no-members">
+                <p>Nessun membro umano online</p>
+            </div>
+        `;
+    }
+
+    // Display bots
+    if (sortedBots.length > 0) {
+        botsGrid.innerHTML = sortedBots.map(member => createMemberCard(member, true)).join('');
+    } else {
+        botsGrid.innerHTML = `
+            <div class="no-members">
+                <p>Nessun bot online</p>
+            </div>
+        `;
+    }
+}
+
+// ============================================
+// CREATE MEMBER CARD
+// ============================================
+function createMemberCard(member, isBotCard = false) {
+    const statusClass = member.status === 'online' ? 'online' : 'offline';
+    const statusText = member.status === 'online' ? 'Online' : 'Offline';
+
+    // Get avatar URL or use default Discord avatar
+    const avatarUrl = member.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png';
+
+    // Bot badge
+    const botBadge = isBotCard ? '<span class="bot-badge">🤖 BOT</span>' : '';
+
+    // Get activity if available
+    const activity = member.game ? `
+        <div class="member-activity">
+            <span class="activity-icon">🎮</span>
+            <span class="activity-name">${escapeHtml(member.game.name)}</span>
+        </div>
+    ` : '';
+
+    return `
+        <div class="member-card ${statusClass} ${isBotCard ? 'bot-card' : ''}">
+            <div class="member-avatar-container">
+                <img src="${avatarUrl}" alt="${escapeHtml(member.username)}" class="member-avatar">
+                <span class="status-indicator ${statusClass}"></span>
+            </div>
+            <div class="member-info">
+                <h3 class="member-name">${escapeHtml(member.username)}</h3>
+                ${botBadge}
+                <span class="member-status ${statusClass}">${statusText}</span>
+                ${activity}
+            </div>
+        </div>
+    `;
+}
+
+// ============================================
+// UPDATE STATISTICS
+// ============================================
+function updateStats(data) {
+    const totalMembersEl = document.getElementById('totalMembers');
+    const onlineMembersEl = document.getElementById('onlineMembers');
+    const totalBotsEl = document.getElementById('totalBots');
+
+    if (totalMembersEl && data.presence_count !== undefined) {
+        animateNumber(totalMembersEl, data.presence_count);
+    }
+
+    if (onlineMembersEl && data.members) {
+        const onlineCount = data.members.filter(m => m.status === 'online' && !isBot(m)).length;
+        animateNumber(onlineMembersEl, onlineCount);
+    }
+
+    if (totalBotsEl && data.members) {
+        const botCount = data.members.filter(m => isBot(m)).length;
+        animateNumber(totalBotsEl, botCount);
+    }
+}
+
+// ============================================
+// ANIMATE NUMBER
+// ============================================
+function animateNumber(element, target) {
+    const duration = 1000;
+    const start = 0;
+    const startTime = performance.now();
+
+    function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        const current = Math.floor(progress * target);
         element.textContent = current;
 
         if (progress < 1) {
-            window.requestAnimationFrame(step);
+            requestAnimationFrame(update);
         }
-    };
+    }
 
-    window.requestAnimationFrame(step);
+    requestAnimationFrame(update);
 }
 
 // ============================================
-// INITIALIZE ON DOM LOAD
+// SHOW ERROR
 // ============================================
-document.addEventListener('DOMContentLoaded', function () {
+function showError() {
+    const errorHTML = `
+        <div class="error-message">
+            <p>⚠️ Impossibile caricare i dati</p>
+            <p class="error-details">Assicurati che il widget Discord sia abilitato nelle impostazioni del server</p>
+            <button onclick="loadMembers()" class="btn btn-primary mt-3">Riprova</button>
+        </div>
+    `;
+
+    const membersGrid = document.getElementById('membersGrid');
+    const botsGrid = document.getElementById('botsGrid');
+
+    membersGrid.innerHTML = errorHTML;
+    botsGrid.innerHTML = '';
+}
+
+// ============================================
+// SHOW LOADING
+// ============================================
+function showLoading() {
+    const loadingHTML = `
+        <div class="loading-container">
+            <div class="loading-spinner"></div>
+            <p>Caricamento...</p>
+        </div>
+    `;
+
+    const membersGrid = document.getElementById('membersGrid');
+    const botsGrid = document.getElementById('botsGrid');
+
+    membersGrid.innerHTML = loadingHTML;
+    botsGrid.innerHTML = loadingHTML;
+}
+
+// ============================================
+// ESCAPE HTML
+// ============================================
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// ============================================
+// LOAD MEMBERS
+// ============================================
+async function loadMembers() {
+    showLoading();
+
+    const data = await fetchDiscordMembers();
+
+    if (data) {
+        displayMembers(data.members || []);
+        updateStats(data);
+    }
+}
+
+// ============================================
+// INITIALIZE ON PAGE LOAD
+// ============================================
+document.addEventListener('DOMContentLoaded', () => {
     loadMembers();
 
-    // Add hover sound effect (optional)
-    const memberCards = document.querySelectorAll('.member-card');
-    memberCards.forEach(card => {
-        card.addEventListener('mouseenter', function () {
-            this.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-        });
-    });
+    // Refresh members every 30 seconds
+    setInterval(loadMembers, 30000);
 });
-
-// ============================================
-// DISCORD API INTEGRATION (FUTURE)
-// ============================================
-/*
-async function loadDiscordMembers() {
-  try {
-    // This would require a backend proxy to call Discord API
-    const response = await fetch('YOUR_API_ENDPOINT');
-    const data = await response.json();
-    
-    // Process and display members
-    data.members.forEach(member => {
-      // Create member cards dynamically
-    });
-  } catch (error) {
-    console.error('Error loading Discord members:', error);
-    // Fallback to static data
-    loadMembers();
-  }
-}
-*/
