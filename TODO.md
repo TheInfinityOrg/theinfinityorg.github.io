@@ -2,7 +2,7 @@
 
 L'obiettivo di queste funzionalità è rendere il sito web più **dinamico**, **utile** e in grado di **attirare e trattenere** i giocatori di Call of Duty: Warzone.
 
-## 1. 🌐 Integrazione Dinamica con Discord
+## 1. [x] 🌐 Integrazione Dinamica con Discord
 
 Migliora il collegamento tra la landing page e il cuore della community.
 
